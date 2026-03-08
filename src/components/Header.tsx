@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
+import { useAuth } from '../context/AuthContext';
 
 export default function Header() {
   const { toggleSearch, toggleMobileMenu } = useApp();
+  const { user, signOut } = useAuth();
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
@@ -38,6 +40,18 @@ export default function Header() {
             <line x1="21" y1="21" x2="16.65" y2="16.65" />
           </svg>
         </button>
+        {user ? (
+          <div className="header-user">
+            <span className="header-user-email">{user.email}</span>
+            <button className="header-sign-out" onClick={signOut}>
+              Sign Out
+            </button>
+          </div>
+        ) : (
+          <Link to="/login" className="header-sign-in">
+            Sign In
+          </Link>
+        )}
         <button className="icon-btn mobile-menu-btn" aria-label="Menu" onClick={toggleMobileMenu}>
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <line x1="3" y1="6" x2="21" y2="6" />

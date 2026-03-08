@@ -8,6 +8,7 @@ import HomePage from './pages/HomePage';
 import BrowsePage from './pages/BrowsePage';
 import MyListPage from './pages/MyListPage';
 import SearchResultsPage from './pages/SearchResultsPage';
+import LoginPage from './pages/LoginPage';
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
           <Route path="/browse/:genre" element={<BrowsePage />} />
           <Route path="/my-list" element={<MyListPage />} />
           <Route path="/search" element={<SearchResultsPage />} />
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
         <MovieModal />
       </div>

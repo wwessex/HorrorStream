@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 import { Movie } from '../types';
 import { useMyList } from '../hooks/useMyList';
+import { useAuth } from './AuthContext';
 
 type AppContextValue = {
   selectedMovie: Movie | null;
@@ -23,11 +24,12 @@ type AppContextValue = {
 const AppContext = createContext<AppContextValue | null>(null);
 
 export function AppProvider({ children }: { children: ReactNode }) {
+  const { user } = useAuth();
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { myList, addToMyList, removeFromMyList, isInMyList } = useMyList();
+  const { myList, addToMyList, removeFromMyList, isInMyList } = useMyList(user);
 
   const openModal = useCallback((movie: Movie) => {
     setSelectedMovie(movie);
