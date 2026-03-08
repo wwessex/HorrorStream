@@ -1,101 +1,74 @@
-import { useState } from 'react';
-import { originals, picks, type Pick } from './data';
-
-function shuffle<T>(array: T[]): T[] {
-  return [...array].sort(() => Math.random() - 0.5);
-}
+import { featuredMovie, movies } from './data';
 
 export default function App() {
-  const [featured, setFeatured] = useState<Pick[]>(picks);
-
   return (
-    <>
-      <header className="hero">
-        <nav className="topbar container">
-          <div className="brand">Nightfall Vault</div>
-          <button className="ghost-btn">Start 7-day free trial</button>
-        </nav>
-        <div className="hero-content container">
-          <p className="eyebrow">Entertainment · Horror & Thrillers</p>
-          <h1>Stream daring scares, tense mysteries, and dark originals.</h1>
-          <p className="subtitle">
-            Nightfall Vault is a curated home for high-impact horror, psychological thrillers, and
-            genre-bending series — ad-free, uncensored, and updated every week.
-          </p>
-          <div className="hero-actions">
-            <button className="primary-btn">Try free for 7 days</button>
-            <button className="secondary-btn">Browse collection</button>
-          </div>
+    <div className="app">
+      <header className="header">
+        <h1 className="logo">DREADFLIX</h1>
+        <div className="header-actions">
+          <button className="icon-btn" aria-label="Search">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+          </button>
+          <button className="icon-btn" aria-label="Menu">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
         </div>
       </header>
 
-      <main className="container">
-        <section className="section">
-          <div className="section-head">
-            <h2>Tonight&apos;s picks</h2>
-            <button className="link-btn" onClick={() => setFeatured(shuffle(picks))}>
-              Shuffle picks
-            </button>
+      <section className="hero" style={{ background: featuredMovie.gradient }}>
+        <div className="hero-overlay">
+          <div className="hero-content">
+            {featuredMovie.isOriginal && (
+              <span className="original-badge">DREADFLIX ORIGINAL</span>
+            )}
+            <h2 className="hero-title">{featuredMovie.title}</h2>
+            <p className="hero-description">{featuredMovie.description}</p>
+            <div className="hero-meta">
+              <span className="match-percent">{featuredMovie.matchPercent}% Match</span>
+              <span>{featuredMovie.year}</span>
+              <span className="rating-badge">{featuredMovie.rating}</span>
+              <span>{featuredMovie.duration}</span>
+            </div>
+            <div className="hero-actions">
+              <button className="play-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="5,3 19,12 5,21" />
+                </svg>
+                Play Now
+              </button>
+              <button className="info-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="16" x2="12" y2="12" />
+                  <line x1="12" y1="8" x2="12.01" y2="8" />
+                </svg>
+                More Info
+              </button>
+            </div>
           </div>
-          <div className="card-grid">
-            {featured.map((item) => (
-              <article className="card" key={item.title}>
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-                <span className="badge">{item.mood}</span>
-              </article>
-            ))}
-          </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="section two-col">
-          <article className="panel">
-            <h3>Membership that keeps things simple</h3>
-            <ul className="features">
-              <li>7-day trial with full catalog access</li>
-              <li>One monthly plan, cancel anytime in account settings</li>
-              <li>Offline-ready watchlist and cross-device syncing</li>
-              <li>Support for phone, tablet, and TV casting</li>
-            </ul>
-          </article>
-          <article className="panel">
-            <h3>Subscription details</h3>
-            <p>
-              Payments are charged to your store account at confirmation. Plans renew automatically
-              unless canceled at least 24 hours before renewal.
-            </p>
-            <p>
-              Renewal is processed within 24 hours of period end. Manage plans and cancellation
-              from your store subscription settings.
-            </p>
-          </article>
-        </section>
-
-        <section className="section">
-          <h2>Vault originals</h2>
-          <div className="horizontal-row">
-            {originals.map((item) => (
-              <article className="mini-card" key={item.name}>
-                <h4>{item.name}</h4>
-                <p>{item.copy}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="section support">
-          <h2>Need help?</h2>
-          <p>
-            If you run into playback or account issues, visit{' '}
-            <a href="https://support.nightfallvault.example" target="_blank" rel="noreferrer">
-              support.nightfallvault.example
-            </a>
-          </p>
-          <p>
-            <a href="#">Privacy policy</a> · <a href="#">Terms of use</a>
-          </p>
-        </section>
-      </main>
-    </>
+      <section className="trending-section">
+        <h2 className="section-title">Trending Now</h2>
+        <div className="trending-row">
+          {movies.map((movie) => (
+            <article className="movie-card" key={movie.title} style={{ background: movie.gradient }}>
+              <div className="card-overlay">
+                {movie.isOriginal && <span className="card-badge">ORIGINAL</span>}
+                <h3 className="card-title">{movie.title}</h3>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }
