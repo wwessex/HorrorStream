@@ -1,15 +1,18 @@
 import { useApp } from '../context/AppContext';
-import { allMovies } from '../data';
+import { useMovies } from '../hooks/useMovies';
 import MovieCard from '../components/MovieCard';
 
 export default function MyListPage() {
   const { myList } = useApp();
-  const savedMovies = allMovies.filter((m) => myList.includes(m.id));
+  const { movies, loading } = useMovies();
+  const savedMovies = movies.filter((m) => myList.includes(m.id));
 
   return (
     <div className="page-container">
       <h1 className="page-title">My List</h1>
-      {savedMovies.length > 0 ? (
+      {loading ? (
+        <p className="empty-state">Loading...</p>
+      ) : savedMovies.length > 0 ? (
         <div className="movie-grid">
           {savedMovies.map((movie) => (
             <MovieCard key={movie.id} movie={movie} />

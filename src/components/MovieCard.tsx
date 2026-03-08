@@ -7,7 +7,11 @@ export default function MovieCard({ movie }: { movie: Movie }) {
   return (
     <article
       className="movie-card"
-      style={{ background: movie.gradient }}
+      style={
+        movie.coverImageUrl || movie.thumbnailUrl
+          ? { backgroundImage: `url(${movie.thumbnailUrl || movie.coverImageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+          : { background: movie.gradient }
+      }
       onClick={() => openModal(movie)}
       role="button"
       tabIndex={0}

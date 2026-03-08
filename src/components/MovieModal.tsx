@@ -18,6 +18,12 @@ export default function MovieModal() {
 
   const inList = isInMyList(selectedMovie.id);
 
+  const heroBg = selectedMovie.bannerImageUrl || selectedMovie.coverImageUrl
+    ? {
+        background: `linear-gradient(to top, #181818 0%, transparent 60%), url(${selectedMovie.bannerImageUrl || selectedMovie.coverImageUrl}) center/cover no-repeat`,
+      }
+    : { background: selectedMovie.gradient };
+
   return (
     <div className="modal-backdrop" onClick={closeModal}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -28,7 +34,7 @@ export default function MovieModal() {
           </svg>
         </button>
 
-        <div className="modal-hero" style={{ background: selectedMovie.gradient }}>
+        <div className="modal-hero" style={heroBg}>
           <div className="modal-hero-overlay">
             {selectedMovie.isOriginal && (
               <span className="original-badge">DREADFLIX ORIGINAL</span>
@@ -45,7 +51,20 @@ export default function MovieModal() {
             <span>{selectedMovie.duration}</span>
           </div>
           <p className="modal-genre">{selectedMovie.genre}</p>
+          {selectedMovie.tagline && (
+            <p className="modal-tagline">{selectedMovie.tagline}</p>
+          )}
           <p className="modal-description">{selectedMovie.description}</p>
+
+          {selectedMovie.director && (
+            <p className="modal-detail"><span className="modal-detail-label">Director:</span> {selectedMovie.director}</p>
+          )}
+          {selectedMovie.castMembers.length > 0 && (
+            <p className="modal-detail"><span className="modal-detail-label">Cast:</span> {selectedMovie.castMembers.join(', ')}</p>
+          )}
+          {selectedMovie.contentWarnings.length > 0 && (
+            <p className="modal-detail"><span className="modal-detail-label">Content Warnings:</span> {selectedMovie.contentWarnings.join(', ')}</p>
+          )}
 
           <div className="modal-actions">
             <button className="play-btn">

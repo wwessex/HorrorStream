@@ -1,12 +1,13 @@
 import { useSearchParams } from 'react-router-dom';
 import { useSearch } from '../hooks/useSearch';
-import { allMovies } from '../data';
+import { useMovies } from '../hooks/useMovies';
 import MovieCard from '../components/MovieCard';
 
 export default function SearchResultsPage() {
   const [searchParams] = useSearchParams();
   const query = searchParams.get('q') || '';
-  const results = useSearch(query, allMovies);
+  const { movies } = useMovies();
+  const results = useSearch(query, movies);
 
   return (
     <div className="page-container">

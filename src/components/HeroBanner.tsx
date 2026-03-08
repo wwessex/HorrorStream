@@ -4,8 +4,14 @@ import { useApp } from '../context/AppContext';
 export default function HeroBanner({ movie }: { movie: Movie }) {
   const { openModal } = useApp();
 
+  const bgStyle = movie.bannerImageUrl || movie.coverImageUrl
+    ? {
+        background: `linear-gradient(to top, #000 0%, transparent 60%), url(${movie.bannerImageUrl || movie.coverImageUrl}) center/cover no-repeat`,
+      }
+    : { background: movie.gradient };
+
   return (
-    <section className="hero" style={{ background: movie.gradient }}>
+    <section className="hero" style={bgStyle}>
       <div className="hero-overlay">
         <div className="hero-content">
           {movie.isOriginal && (
