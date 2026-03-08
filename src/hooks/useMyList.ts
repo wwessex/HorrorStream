@@ -1,4 +1,6 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import { User } from '@supabase/supabase-js';
+import { supabase } from '../lib/supabase';
 
 const STORAGE_KEY = 'dreadflix-my-list';
 
@@ -16,25 +18,64 @@ function saveList(ids: string[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
 }
 
-export function useMyList() {
-  const [myList, setMyList] = useState<string[]>(loadList);
+export function useMyList(user: User | null) {
+  const [myList, setMyList] = useState<string[]>(user ? [] : loadList);
 
-  const addToMyList = useCallback((id: string) => {
-    setMyList((prev) => {
-      if (prev.includes(id)) return prev;
-      const next = [...prev, id];
-      saveList(next);
-      return next;
-    });
-  }, []);
+  // Fetch list from Supabase when user is authenticated
+  useEffect(() => {
+    if (!user) {
+      setMyList(loadList());
+      return;
+    }
 
-  const removeFromMyList = useCallback((id: string) => {
-    setMyList((prev) => {
-      const next = prev.filter((x) => x !== id);
-      saveList(next);
-      return next;
-    });
-  }, []);
+    supabase
+      .from('user_lists')
+      .select('movie_id')
+      .eq('user_id', user.id)
+      .order('created_at', { ascending: true })
+      .then(({ data }) => {
+        if (data) {
+          setMyList(data.map((row) => row.movie_id));
+        }
+      });
+  }, [user]);
+
+  const addToMyList = useCallback(
+    async (id: string) => {
+      setMyList((prev) => {
+        if (prev.includes(id)) return prev;
+        const next = [...prev, id];
+        if (!user) saveList(next);
+        return next;
+      });
+
+      if (user) {
+        await supabase
+          .from('user_lists')
+          .upsert({ user_id: user.id, movie_id: id });
+      }
+    },
+    [user]
+  );
+
+  const removeFromMyList = useCallback(
+    async (id: string) => {
+      setMyList((prev) => {
+        const next = prev.filter((x) => x !== id);
+        if (!user) saveList(next);
+        return next;
+      });
+
+      if (user) {
+        await supabase
+          .from('user_lists')
+          .delete()
+          .eq('user_id', user.id)
+          .eq('movie_id', id);
+      }
+    },
+    [user]
+  );
 
   const isInMyList = useCallback(
     (id: string) => myList.includes(id),
