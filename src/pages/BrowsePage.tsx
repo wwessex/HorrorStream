@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { allMovies, genres } from '../data';
+import { genres } from '../data';
+import { useMovies } from '../hooks/useMovies';
 import MovieCard from '../components/MovieCard';
 
 export default function BrowsePage() {
@@ -11,10 +12,12 @@ export default function BrowsePage() {
       : 'All'
   );
 
+  const { movies, loading } = useMovies();
+
   const filtered =
     selectedGenre === 'All'
-      ? allMovies
-      : allMovies.filter((m) =>
+      ? movies
+      : movies.filter((m) =>
           m.genre.toLowerCase().includes(selectedGenre.toLowerCase())
         );
 
@@ -32,7 +35,9 @@ export default function BrowsePage() {
           </button>
         ))}
       </div>
-      {filtered.length > 0 ? (
+      {loading ? (
+        <p className="empty-state">Loading movies...</p>
+      ) : filtered.length > 0 ? (
         <div className="movie-grid">
           {filtered.map((movie) => (
             <MovieCard key={movie.id} movie={movie} />

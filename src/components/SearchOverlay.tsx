@@ -1,13 +1,14 @@
 import { useEffect, useRef } from 'react';
 import { useApp } from '../context/AppContext';
 import { useSearch } from '../hooks/useSearch';
-import { allMovies } from '../data';
+import { useMovies } from '../hooks/useMovies';
 import MovieCard from './MovieCard';
 
 export default function SearchOverlay() {
   const { isSearchOpen, searchQuery, setSearchQuery, closeSearch } = useApp();
   const inputRef = useRef<HTMLInputElement>(null);
-  const results = useSearch(searchQuery, allMovies);
+  const { movies } = useMovies();
+  const results = useSearch(searchQuery, movies);
 
   useEffect(() => {
     if (isSearchOpen && inputRef.current) {
