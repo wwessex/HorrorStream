@@ -10,9 +10,40 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+    <style>
+      body {
+        margin: 0;
+        font-family: 'Inter', system-ui, sans-serif;
+        background: radial-gradient(circle at top, #1a1430, #09070f 48%);
+        color: #f4f1ff;
+      }
+      .fallback {
+        width: min(900px, 92vw);
+        margin: 0 auto;
+        padding: 3rem 0 4rem;
+      }
+      .fallback h1 {
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        margin: 0.4rem 0 0.9rem;
+      }
+      .fallback p {
+        color: #b9adcf;
+        line-height: 1.6;
+        max-width: 62ch;
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <main class="fallback">
+        <p>Entertainment · Horror & Thrillers</p>
+        <h1>Nightfall Vault</h1>
+        <p>
+          Loading the full app… If this message stays visible, your deployment is serving source
+          files instead of the built <code>dist/</code> output.
+        </p>
+      </main>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

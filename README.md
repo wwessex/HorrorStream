@@ -48,3 +48,13 @@ A GitHub Actions workflow is included at `.github/workflows/deploy-pages.yml`.
 3. The workflow builds `dist/` and publishes it to GitHub Pages.
 
 For cPanel deployment, upload the contents of `dist/` to your target web root folder.
+
+## Troubleshooting blank page on static hosts
+
+If the page loads blank, your host is usually serving the source repository directly instead of the Vite build output.
+
+- Build first: `npm run build`
+- Deploy the contents of `dist/` (not `src/`, `index.html`, and config files from the repo root)
+- On GitHub Pages, use the included workflow and keep Pages source set to **GitHub Actions**
+
+The `index.html` now contains a fallback message to make this deployment issue visible instead of showing an empty page.
