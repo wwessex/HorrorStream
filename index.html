@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nightfall Vault</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <nav class="topbar container">
+        <div class="brand">Nightfall Vault</div>
+        <button class="ghost-btn">Start 7-day free trial</button>
+      </nav>
+      <div class="hero-content container">
+        <p class="eyebrow">Entertainment · Horror & Thrillers</p>
+        <h1>Stream daring scares, tense mysteries, and dark originals.</h1>
+        <p class="subtitle">
+          Nightfall Vault is a curated home for high-impact horror, psychological thrillers,
+          and genre-bending series — ad-free, uncensored, and updated every week.
+        </p>
+        <div class="hero-actions">
+          <button class="primary-btn">Try free for 7 days</button>
+          <button class="secondary-btn">Browse collection</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-head">
+          <h2>Tonight's picks</h2>
+          <button class="link-btn" id="shuffleBtn">Shuffle picks</button>
+        </div>
+        <div id="featuredGrid" class="card-grid"></div>
+      </section>
+
+      <section class="section two-col">
+        <article class="panel">
+          <h3>Membership that keeps things simple</h3>
+          <ul class="features">
+            <li>7-day trial with full catalog access</li>
+            <li>One monthly plan, cancel anytime in account settings</li>
+            <li>Offline-ready watchlist and cross-device syncing</li>
+            <li>Support for phone, tablet, and TV casting</li>
+          </ul>
+        </article>
+        <article class="panel">
+          <h3>Subscription details</h3>
+          <p>
+            Payments are charged to your store account at confirmation. Plans renew
+            automatically unless canceled at least 24 hours before renewal.
+          </p>
+          <p>
+            Renewal is processed within 24 hours of period end. Manage plans and cancellation
+            from your store subscription settings.
+          </p>
+        </article>
+      </section>
+
+      <section class="section">
+        <h2>Vault originals</h2>
+        <div id="originalsRow" class="horizontal-row"></div>
+      </section>
+
+      <section class="section support">
+        <h2>Need help?</h2>
+        <p>
+          If you run into playback or account issues, visit
+          <a href="https://support.nightfallvault.example" target="_blank" rel="noreferrer"
+            >support.nightfallvault.example</a
+          >
+        </p>
+        <p>
+          <a href="#">Privacy policy</a> ·
+          <a href="#">Terms of use</a>
+        </p>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
