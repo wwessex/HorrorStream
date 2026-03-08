@@ -55,6 +55,7 @@ If the page loads blank, your host is usually serving the source repository dire
 
 - Build first: `npm run build`
 - Deploy the contents of `dist/` (not `src/`, `index.html`, and config files from the repo root)
+- If you do temporarily host the repo root, keep module script paths relative (for example `./src/main.tsx`) so project subpaths still resolve correctly
 - On GitHub Pages, use the included workflow and keep Pages source set to **GitHub Actions**
 
 The `index.html` now contains a fallback message to make this deployment issue visible instead of showing an empty page.
