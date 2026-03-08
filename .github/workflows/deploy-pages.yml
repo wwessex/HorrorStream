@@ -2,7 +2,10 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    # Deploy on any branch push so branch naming cannot prevent Pages builds.
+    # The previous branch filter could miss the active default branch and leave
+    # GitHub Pages serving an older/source snapshot.
+    branches: ['**']
   workflow_dispatch:
 
 permissions:
@@ -32,6 +35,9 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
