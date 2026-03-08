@@ -2,7 +2,10 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    # Deploy from either common default branch name.
+    # Some repos still use `master`, and restricting this to only `main`
+    # leaves Pages serving stale/source files when no workflow run occurs.
+    branches: [main, master]
   workflow_dispatch:
 
 permissions:
